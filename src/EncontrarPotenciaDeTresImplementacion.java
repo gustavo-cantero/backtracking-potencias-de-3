@@ -14,7 +14,7 @@ public class EncontrarPotenciaDeTresImplementacion implements EncontrarPotenciaD
         return res;
     }
 
-    private void BuscarPot3(ArrayList<Integer> p, ArrayList<Integer> i, int valActual, int[] cantPI, int[] usos, ArrayList<Integer> res) {
+    private void BuscarPot3(ArrayList<Integer> p, ArrayList<Integer> i, long valActual, int[] cantPI, int[] usos, ArrayList<Integer> res) {
         ArrayList<Integer> t = p; //Referencia temporal para cambiar entre pares e impares.  Comenzamos con los pares.
         int pi = 0; //Guardamos si estamos utilizando los pares o impares.
         while (pi <= 1) {
@@ -23,9 +23,9 @@ public class EncontrarPotenciaDeTresImplementacion implements EncontrarPotenciaD
                 t.forEach(v -> {
                     if (usos[v] < 2 && (v != 0 || valActual != 0)) {
                         usos[v]++;
-                        int valTemp = valActual * 10 + v;
-                        if (cantPI[0] == cantPI[1] && esPotencia(valTemp))
-                            res.add(valTemp);
+                        long valTemp = valActual * 10 + v;
+                        if (cantPI[0] == cantPI[1] && esPotencia(valTemp) && valTemp <= Integer.MAX_VALUE)
+                            res.add((int)valTemp);
                         BuscarPot3(p, i, valTemp, cantPI, usos, res);
                         usos[v]--;
                     }
@@ -37,7 +37,7 @@ public class EncontrarPotenciaDeTresImplementacion implements EncontrarPotenciaD
         }
     }
 
-    private boolean esPotencia(int valor) {
+    private boolean esPotencia(long valor) {
         double r = Math.cbrt(valor);
         return r == Math.floor(r) && !Double.isInfinite(r);
     }
